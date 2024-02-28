@@ -22,7 +22,10 @@ Should you encounter any issues or have ideas for enhancements, please don't hes
 
 Assistance and clarifications will be readily provided whenever feasible.
 
-## 🚪Enjoy the game
+## 🚪 Enjoy the game
 
 Feel free to download the code, dive in, and relish the simplicity and fun of this game.
 
+## ❗
+
+The code was written by @NianCode. (nicolash.contato@gmail.com)
