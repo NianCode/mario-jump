@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Jump</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+    <!-- written by NianCode.
+    pt-br: escrito por NianCode. 
+
+    Email: nicolash.contato@gmail.com -->
+
+    <header></header>
+    <!-- Base container for the game -->
+    <div class="base">
+        <section>
+
+            <div class="chao"></div>
+
+            <!-- Game container -->
+            <div class="cotainerJogo">
+
+                <!-- Enemy hitbox -->
+                <div class="hitboxInimigo">
+                    <img src="./imagens/inimigo/cano.png" class="inimigo">
+                </div>
+
+                <!-- Mario hitbox -->
+                <div class="hitboxMario">
+                    <img src="./imagens/personagem/mario.gif" class="mario">
+                </div>
+
+                <!-- Points counter -->
+                <div class="pontos">
+                    0000
+                </div>
+
+                <!-- Cloud images -->
+                <img src="./imagens/cenario/nuvens.webp" class="nuvens">
+                <img src="./imagens/cenario/nuvens.webp" class="nuvens2">
+            </div>
+
+        </section>
+
+        <!-- Menu and ranking container -->
+        <div class="container">
+
+            <!-- Menu section -->
+            <div class="menu">
+
+                <!-- Points label -->
+                <label for="pontosMenu" class="lblPontosMenu">Pontos</label>
+                <!-- Points counter in the menu -->
+                <div class="pontosMenu">0000</div>
+                <!-- Restart button -->
+                <div class="btnRestart">
+                    RESTART
+                </div>
+
+            </div>
+
+            <!-- Ranking section -->
+            <div class="containerRanking">
+
+                <!-- Ranking label -->
+                <label for="rankingBox" class="lblRankingBox">Ranking</label>
+                <!-- Ranking box -->
+                <div class="rankingBox">
+
+                    <!-- Ranking items -->
+                    <div class="rankingItem">
+                        <!-- Label for the first ranking item -->
+                        <label for="n1Ranking" class="lblRanking" id="lblN1Ranking">Aaaaa</label>
+                        <!-- Points for the first ranking item -->
+                        <p class="Ranking" id="n1Ranking">0000</p>
+                    </div>
+
+                    <!-- Repeat the structure for other ranking items -->
+                    <div class="rankingItem">
+                        <label for="n2Ranking" class="lblRanking" id="lblN2Ranking">Bbbbb</label>
+                        <p class="Ranking" id="n2Ranking">0000</p>
+                    </div>
+
+                    <div class="rankingItem">
+                        <label for="n3Ranking" class="lblRanking" id="lblN3Ranking">Ccccc</label>
+                        <p class="Ranking" id="n3Ranking">0000</p>
+                    </div>
+
+                    <div class="rankingItem">
+                        <label for="n4Ranking" class="lblRanking" id="lblN4Ranking">Ddddd</label>
+                        <p class="Ranking" id="n4Ranking">0000</p>
+                    </div>
+
+                    <div class="rankingItem">
+                        <label for="n5Ranking" class="lblRanking" id="lblN5Ranking">Eeeee</label>
+                        <p class="Ranking" id="n5Ranking">0000</p>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+
+        <footer></footer>
+</body>
+<!-- Link to JavaScript file -->
+<script src="script.js"></script>
+
+</html>

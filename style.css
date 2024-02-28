@@ -1,0 +1,388 @@
+/* Font face declaration */
+@font-face {
+    font-family: "pixel";
+    src: url(upheavtt.ttf);
+}
+
+/* Body styling */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(./imagens/cenario/fundo.jpg);
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header styling */
+header {
+    position: absolute;
+    margin-bottom: 450px;
+    height: 150px;
+    width: 250px;
+    background-size: 240px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(./imagens/cenario/logo.webp);
+    z-index: 5;
+}
+
+/* Base styling */
+.base {
+    display: flex;
+    flex-direction: row;
+    border-radius: 9px;
+    border: 10px solid whitesmoke;
+    border-right: 10px solid rgb(199, 199, 199);
+    background: rgb(194, 194, 194);
+    background: linear-gradient(270deg, rgba(194, 194, 194, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    box-shadow: 5px 5px 10px rgb(73, 73, 73);
+}
+
+/* Section styling */
+section {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 800px;
+    height: 400px;
+    border: solid 15px rgb(22, 22, 22);
+    border-style: double;
+    border-radius: 12px;
+    background: rgb(255, 255, 255);
+    box-shadow: 1px 1px #181818, 2px 2px #181818, 3px 3px #181818, 4px 4px #181818, 5px 5px #181818, 6px 6px #181818, 7px 7px #181818, 8px 8px #181818;
+    transform: translateX(-8px) translateY(-8px);
+}
+
+/* Ground styling */
+.chao {
+    height: 20px;
+    background: rgb(14, 143, 14);
+    z-index: 4;
+}
+
+/* Game container styling */
+.cotainerJogo {
+    background-color: rgb(38, 152, 228);
+    background-image: url(./imagens/cenario/ceu.jpg);
+    background-size: cover;
+    background-position: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+/* Enemy hitbox styling */
+.hitboxInimigo {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    left: -800px;
+}
+
+/* Enemy image styling */
+.inimigo {
+    height: 60px;
+    width: 60px;
+    bottom: -4px;
+    z-index: 3;
+    position: relative;
+}
+
+/* Mario hitbox styling */
+.hitboxMario {
+    height: 120px;
+    width: 50px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+    bottom: 0px;
+}
+
+/* Mario image styling */
+.mario {
+    height: 120px;
+    width: 120px;
+    right: 17px;
+    position: relative;
+}
+
+/* Points display styling */
+.pontos,
+.pontosMenu {
+    position: relative;
+    margin: 15px;
+    align-self: flex-start;
+    left: 540px;
+    font: normal 35px "pixel", monospace;
+    color: rgb(241, 241, 241);
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+    text-align: center;
+    z-index: 1;
+    background-color: #181818;
+    width: 100px;
+    padding: 5px 5px 5px 5px;
+    border: double 5px whitesmoke;
+    border-radius: 8px;
+}
+
+/* Label styling for points menu and ranking box */
+.lblPontosMenu,
+.lblRankingBox {
+    position: relative;
+    font: normal 19px "pixel", monospace;
+    color: #181818;
+    bottom: 5px;
+}
+
+/* Menu points display styling */
+.pontosMenu {
+    padding: 0;
+    margin: 0;
+    left: 0;
+    align-self: center;
+    justify-self: flex-start;
+}
+
+/* Clouds styling */
+.nuvens, .nuvens2 {
+    position: absolute;
+    height: 305px;
+    right: -801px;
+    top: -40px;
+}
+
+/* Container styling */
+.container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 430px;
+    width: 500px;
+    display: none;
+}
+
+/* Menu styling */
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 300px;
+}
+
+/* Ranking container styling */
+.containerRanking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 300px;
+}
+
+/* Ranking box styling */
+.rankingBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 250px;
+    font: normal 20px "pixel", monospace;
+    color: rgb(241, 241, 241);
+    text-align: center;
+    background-color: #181818;
+    border: double 5px whitesmoke;
+    border-radius: 8px;
+}
+
+/* Individual ranking item styling */
+.rankingItem{
+    margin-bottom: 10px;
+}
+
+/* Ranking score styling */
+.Ranking {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* Restart button styling */
+.btnRestart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 50px;
+    background-color: #181818;
+    border: double 5px whitesmoke;
+    color: whitesmoke;
+    font: normal 35px "pixel", monospace;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Restart button hover effect */
+.btnRestart:hover {
+    background-color: #000000;
+    text-shadow: 0px 0px 9px rgba(255, 255, 255, 0.507);
+}
+
+/* Restart button active effect */
+.btnRestart:active {
+    background-color: #292929;
+    transform: scale(0.99);
+}
+
+/* Menu animation styling */
+.menuAnimation {
+    animation: menuAnimation 350ms 1 ease-out both;
+}
+
+/* Second menu animation styling */
+.menuAnimation2 {
+    animation: menuAnimation2 350ms 1 ease-out both;
+}
+
+/* Cloud animation styling */
+.nuvensAnimation {
+    animation: nuvens 20s infinite linear;
+}
+
+/* Mario jump animation */
+.pulo {
+    animation: puloMario 500ms ease-out;
+}
+
+/* Jump effect animation */
+.efeitoPulo {
+    -webkit-animation: shadow-pop-br 175ms cubic-bezier(0.470, 0.000, 0.745, 0.715) 2 alternate-reverse both;
+    animation: shadow-pop-br 175ms cubic-bezier(0.470, 0.000, 0.745, 0.715) 2 alternate-reverse both;
+}
+
+/* Fade in animation */
+.fadeIn {
+    animation: fadeIn 600ms 1 linear both;
+}
+
+/* Fade out animation */
+.fadeOut {
+    animation: fadeIn 600ms 1 linear reverse both;
+}
+
+/* Mario jump animation keyframes */
+@keyframes puloMario {
+    0% {
+        bottom: 0px;
+    }
+
+    40% {
+        bottom: 120px;
+    }
+
+    50% {
+        bottom: 120px;
+    }
+
+    100% {
+        bottom: 0px;
+    }
+}
+
+/* Cloud animation keyframes */
+@keyframes nuvens {
+    0% {
+        right: -801px;
+    }
+
+    50% {
+        right: 0px;
+    }
+
+    100% {
+        right: 800px;
+    }
+}
+
+/* Shadow pop animation keyframes */
+@-webkit-keyframes shadow-pop-br {
+    0% {
+        -webkit-box-shadow: 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818;
+        box-shadow: 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818;
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+    }
+
+    100% {
+        -webkit-box-shadow: 1px 1px #181818, 2px 2px #181818, 3px 3px #181818, 4px 4px #181818, 5px 5px #181818, 6px 6px #181818, 7px 7px #181818, 8px 8px #181818;
+        box-shadow: 1px 1px #181818, 2px 2px #181818, 3px 3px #181818, 4px 4px #181818, 5px 5px #181818, 6px 6px #181818, 7px 7px #181818, 8px 8px #181818;
+        -webkit-transform: translateX(-8px) translateY(-8px);
+        transform: translateX(-8px) translateY(-8px);
+    }
+}
+
+/* Shadow pop animation keyframes */
+@keyframes shadow-pop-br {
+    0% {
+        -webkit-box-shadow: 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818;
+        box-shadow: 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818, 0 0 #181818;
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+    }
+
+    100% {
+        -webkit-box-shadow: 1px 1px #181818, 2px 2px #181818, 3px 3px #181818, 4px 4px #181818, 5px 5px #181818, 6px 6px #181818, 7px 7px #181818, 8px 8px #181818;
+        box-shadow: 1px 1px #181818, 2px 2px #181818, 3px 3px #181818, 4px 4px #181818, 5px 5px #181818, 6px 6px #181818, 7px 7px #181818, 8px 8px #181818;
+        -webkit-transform: translateX(-8px) translateY(-8px);
+        transform: translateX(-8px) translateY(-8px);
+    }
+}
+
+/* Menu animation keyframes */
+@keyframes menuAnimation {
+    0% {
+        width: 800px;
+    }
+
+    100% {
+        width: 180px;
+    }
+}
+
+/* Second menu animation keyframes */
+@keyframes menuAnimation2 {
+    0% {
+        width: 0px;
+    }
+
+    100% {
+        width: 620px;
+    }
+}
+
+/* Fade in animation keyframes */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
