@@ -13,8 +13,17 @@
     pt-br: escrito por NianCode. 
 
     Email: nicolash.contato@gmail.com -->
-
-    <header></header>
+    <div class="themeContainer">
+        <div class="themes" id="darkTheme" onclick="setTheme(0)">
+        </div>
+        <div class="themes" id="lightTheme" onclick="setTheme(1)">
+        </div>
+        <div class="themes" id="marioTheme" onclick="setTheme(2)">
+        </div>
+    </div>
+    <!-- Header container -->
+    <header>
+    </header>
     <!-- Base container for the game -->
     <div class="base">
         <section>
@@ -32,6 +41,9 @@
                 <!-- Mario hitbox -->
                 <div class="hitboxMario">
                     <img src="./imagens/personagem/mario.gif" class="mario">
+                    <div id="shrinkBar">
+                        <div id="shrinkPower"></div>
+                    </div>
                 </div>
 
                 <!-- Points counter -->

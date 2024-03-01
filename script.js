@@ -225,6 +225,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    var shrinkPower = document.querySelector('#shrinkPower');
+
     // Function for the character to grow
     function Enlarge() {
         if (big == false) {
@@ -234,6 +237,9 @@ document.addEventListener('DOMContentLoaded', function () {
             hitboxMario.style.height = '';
             mario.style.right = '';
             big = true;
+
+            shrinkPower.style.backgroundColor = 'green';
+            shrinkPower.style.height = '100%';
         }
     }
 
@@ -246,6 +252,10 @@ document.addEventListener('DOMContentLoaded', function () {
             mario.style.right = '0px';
             hitboxMario.style.height = '50px';
             big = false;
+
+            shrinkPower.style.height = '0';
+            shrinkPower.style.backgroundColor = 'red';
+
         }
     }
 
@@ -254,6 +264,35 @@ document.addEventListener('DOMContentLoaded', function () {
         Reload(); // Call the Reload() function when the button is clicked
     })
 
+    window.onload = function() {
+        setTheme(0);
+        document.getElementById("darkTheme").onclick = function() {
+            setTheme(0);
+        };
+        document.getElementById("lightTheme").onclick = function() {
+            setTheme(1);
+        };
+        document.getElementById("marioTheme").onclick = function() {
+            setTheme(2);
+        };
+    };
+
+    function setTheme(index) {
+        const body = document.body;
+        switch(index) {
+            case 0:
+                body.className = 'dark';
+                break;
+            case 1:
+                body.className = 'light';
+                break;
+            case 2:
+                body.className = 'image';
+                break;
+            default:
+                console.log('Índice inválido');
+        }
+    }
     // Start the game when the page loads
     init();
 });
