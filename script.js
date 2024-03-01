@@ -145,12 +145,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     enemy.src = './imagens/inimigo/boo.gif';
                     hitboxEnemy.style.bottom = '55px';
                     airborneEnemy = true;
-                    console.log('it is an airborne enemy');
                 } else {
                     enemy.src = './imagens/inimigo/cano.png';
                     hitboxEnemy.style.bottom = '';
                     airborneEnemy = false;
-                    console.log('it is not an airborne enemy');
                 }
 
             } else if (enemySpeed < 20) { // If the enemy's speed is less than 20, the speed is based on points
@@ -225,9 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-    var shrinkPower = document.querySelector('#shrinkPower');
-
     // Function for the character to grow
     function Enlarge() {
         if (big == false) {
@@ -238,8 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
             mario.style.right = '';
             big = true;
 
-            shrinkPower.style.backgroundColor = 'green';
-            shrinkPower.style.height = '100%';
         }
     }
 
@@ -252,9 +245,6 @@ document.addEventListener('DOMContentLoaded', function () {
             mario.style.right = '0px';
             hitboxMario.style.height = '50px';
             big = false;
-
-            shrinkPower.style.height = '0';
-            shrinkPower.style.backgroundColor = 'red';
 
         }
     }
