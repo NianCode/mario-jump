@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const menu = document.querySelector('.menu'); // Menu
     const ranking = document.querySelector('.containerRanking'); // Ranking container
     const btnRestart = document.querySelector('.btnRestart'); // Restart button
-    const clouds1 = document.querySelector('#nuvens1');
-    const clouds2 = document.querySelector('#nuvens2');
+    const clouds1 = document.querySelector('#nuvens1'); // Clouds
+    const clouds2 = document.querySelector('#nuvens2'); // Clouds
 
 
     // Game state variables
@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let airborneEnemy = false // Value to check if the enemy is airborne or not
     let big = true // Value to check if the character is big or not
     let alive = true; // Value to check if the character is alive or not
+    let jumpStart = null // Value to check if the character is jumping or not
+    let jumpDistance = 120   // Jump distance
+    let jumpDuration = 500 // Jump duration
+    let jumpKeyIsDown = false // Value to check if the jump key is down or not
 
     // Object with character information for reset
     const originalCharacters = {
@@ -42,9 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Game initialization when the page loads
     function init() {
         alive = true;
+        fastFall = false;
         StartLoop();
-        document.addEventListener('keydown', JumpEvent);
-        document.addEventListener('keyup', Grow);
+        document.addEventListener('keydown', KeyDownEvent);
+        document.addEventListener('keyup', KeyUpEvent);
         scoreCounter = 0;
         enemySpeed = 5;
         enemyPos = 800;
@@ -59,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Reset characters to their initial position
     function ResetCharacters() {
+        alive = true;
+        fastFall = false;
         enemyPos = 800;
         hitboxEnemy.style.left = '800px';
         hitboxMario.style.animation = originalCharacters.marioAnimation;
@@ -77,10 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Action when the game ends
     function GameOver(marioPosition) {
+        fastFall = false;
         alive = false;
         clearInterval(loop); // Stops the loop that counts the points and checks if the character collided
-        document.removeEventListener('keydown', JumpEvent);
-        document.removeEventListener('keyup', Grow);
+        document.removeEventListener('keydown', KeyDownEvent);
+        document.removeEventListener('keyup', KeyUpEvent);
         screen.classList.remove('efeitoPulo')
         hitboxMario.style.bottom = `${marioPosition}px`;
         mario.src = "./imagens/personagem/mario_morto.png";
@@ -171,52 +179,52 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 10);
     }
 
-    var jumpStart = null
-    var jumpDistance = 120
-    var jumpDuration = 500
-
+    var fastFall = false;
     function jump(timestamp) {
-        if (!jumpStart) jumpStart = timestamp
-        let progress = timestamp - jumpStart
-        let position = jumpDistance * Math.sin(progress / jumpDuration * Math.PI);
-        hitboxMario.style.bottom = `${position}px`
-        if (progress < jumpDuration && alive == true) {
-            requestAnimationFrame(jump)
+        if (!jumpStart) jumpStart = timestamp;
+        var progress = timestamp - jumpStart;
+        var position = jumpDistance * Math.sin(progress / (fastFall ? jumpDuration * 0.75 : jumpDuration) * Math.PI);
+        hitboxMario.style.bottom = `${position}px`;
+        if (progress < (fastFall ? jumpDuration * 0.75 : jumpDuration) && alive == true) {
+            window.requestAnimationFrame(jump);
         } else {
-            jumpStart = null
-            if (alive == true) {
-                hitboxMario.style.bottom = `0px`
-            }
-            screen.classList.remove('efeitoPulo')
+            hitboxMario.style.bottom = `0px`;
+            screen.classList.remove('efeitoPulo');
+            jumpStart = null;  // Reset start time after animation finishes
+            fastFall = false;  // Reset fast fall after animation finishes
         }
     }
 
-
-    // Event to jump with W, also makes the character shrink with S
-    const JumpEvent = function (event) {
-        if (event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") {
-            if (jumpStart === null) {
-                window.requestAnimationFrame(jump);
-                screen.classList.add('efeitoPulo')
-            }
+    KeyDownEvent = function (event) {
+        if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null) {
+            window.requestAnimationFrame(jump);
+            screen.classList.add('efeitoPulo');
         }
-        if (screen.classList.contains('menuAnimation')) {
-            return 0;
-        } else {
-            if (big == true) {
-                if (event.key == 'ArrowDown' || event.key == 's' || event.key == 'Shift') {
-                    Shrink();
+        if (alive == true && big == true) {
+            if (event.key == 'ArrowDown' || event.key == 's' || event.key == 'Shift') {
+                Shrink();
+                if (jumpStart !== null) {
+                    fastFall = true;
                 }
             }
         }
-    }
+    };
 
-    // Event for the character to grow
-    const Grow = function (event) {
+    KeyUpEvent = function (event) {
         if (event.key == 'ArrowDown' || event.key == 's' || event.key == 'Shift') {
             Enlarge();
+            fastFall = false;
+            if (jumpStart === null) {
+                window.requestAnimationFrame(jump);
+                screen.classList.add('efeitoPulo');
+            }
         }
-    }
+        if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null && big == false) {
+                window.requestAnimationFrame(jump);
+                screen.classList.add('efeitoPulo');
+
+        }
+    };
 
     // Function for the character to grow
     function Enlarge() {

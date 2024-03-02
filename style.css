@@ -157,8 +157,6 @@ section {
     height: 60px;
     width: 60px;
     left: -800px;
-
-    background-color: blue;
 }
 
 /* Enemy image styling */
@@ -181,8 +179,6 @@ section {
     justify-content: flex-end;
     z-index: 2;
     bottom: 0px;
-
-    background-color: red;
 }
 
 /* Mario image styling */
