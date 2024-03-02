@@ -227,11 +227,9 @@ section {
 }
 
 /* Clouds styling */
-.nuvens,
-.nuvens2 {
+.nuvens {
     position: absolute;
     height: 305px;
-    right: -801px;
     top: -40px;
 }
 
@@ -331,11 +329,6 @@ section {
     animation: menuAnimation2 350ms 1 ease-out both;
 }
 
-/* Cloud animation styling */
-.nuvensAnimation {
-    animation: nuvens 20s infinite linear;
-}
-
 /* Mario jump animation */
 .pulo {
     animation: puloMario 500ms ease-out;
@@ -373,21 +366,6 @@ section {
 
     100% {
         bottom: 0px;
-    }
-}
-
-/* Cloud animation keyframes */
-@keyframes nuvens {
-    0% {
-        right: -801px;
-    }
-
-    50% {
-        right: 0px;
-    }
-
-    100% {
-        right: 800px;
     }
 }
 

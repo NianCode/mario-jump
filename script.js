@@ -3,6 +3,7 @@
 // Email: nicolash.contato@gmail.com
 
 document.addEventListener('DOMContentLoaded', function () {
+
     // Variables for game elements
     const hitboxMario = document.querySelector('.hitboxMario'); // Hitbox of Mario
     const mario = document.querySelector('.mario'); // Mario element
@@ -15,7 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const menu = document.querySelector('.menu'); // Menu
     const ranking = document.querySelector('.containerRanking'); // Ranking container
     const btnRestart = document.querySelector('.btnRestart'); // Restart button
-    
+    const clouds1 = document.querySelector('#nuvens1');
+    const clouds2 = document.querySelector('#nuvens2');
+    let cloudPos = 800;
+    let cloudPos2 = 1600;
+    let cloudSpeed = 1;
+
     // Game state variables
     let scoreCounter = 0; // Initial value of the score counter
     let loop; // Loop variable
@@ -31,18 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
         marioAnimation: hitboxMario.style.animation
     };
 
-    // Cloud animation
-    const Clouds = () => {
-        document.querySelector('.nuvens').classList.add('nuvensAnimation'); // Add cloud animation
-        setTimeout(() => {
-            document.querySelector('.nuvens2').classList.add('nuvensAnimation'); // Add cloud animation for the second cloud
-        }, 10000);
-    };
-
     // Game initialization when the page loads
     function init() {
         StartLoop();
-        Clouds();
         document.addEventListener('keydown', JumpEvent); // Makes the character jump when pressing W and shrink when pressing S
         document.addEventListener('keyup', Grow); // Makes the character grow when releasing S
     }
@@ -51,17 +48,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function ResetCharacters() {
         enemyPos = 800;
         hitboxEnemy.style.left = '800px';
-
         hitboxMario.style.animation = originalCharacters.marioAnimation;
         hitboxMario.style.bottom = `${originalCharacters.marioBottom}px`;
         hitboxMario.style.height = '';
-
         big = true;
         airborneEnemy = false;
-
         enemy.src = "./imagens/inimigo/cano.png";
         hitboxEnemy.style.bottom = '';
-
         mario.src = "./imagens/personagem/mario.gif";
         mario.style.height = '';
         mario.style.top = '';
@@ -70,12 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Action when the game ends
-    function GameOver(marioPosition, enemyPosition) {
+    function GameOver(marioPosition) {
         clearInterval(loop); // Stops the loop that counts the points and checks if the character collided
-
         document.removeEventListener('keydown', JumpEvent);
         document.removeEventListener('keyup', Grow);
-
         hitboxMario.style.bottom = `${marioPosition}px`;
         hitboxMario.style.animation = "none";
         mario.src = "./imagens/personagem/mario_morto.png";
@@ -83,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         mario.style.top = '7px';
         mario.style.right = '0px';
         mario.style.width = 'auto';
-
         screen.classList.add('menuAnimation');
         container.classList.add('menuAnimation2');
         container.style.display = 'flex';
@@ -96,20 +86,16 @@ document.addEventListener('DOMContentLoaded', function () {
     function Reload() {
         document.addEventListener('keydown', JumpEvent);
         document.addEventListener('keyup', Grow);
-
         scoreCounter = 0;
         enemySpeed = 5;
         enemyPos = 800;
         points.innerHTML = scoreCounter.toString().padStart(4, '0');
         pointsMenu.innerHTML = scoreCounter.toString().padStart(4, '0');
-
         ResetCharacters();
-
         screen.classList.remove('menuAnimation');
         container.classList.remove('menuAnimation2');
         container.style.display = 'none';
         points.style.display = 'inline';
-
         init();
     }
 
@@ -118,9 +104,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Start the game loop
+    /**
+     * Starts the game loop.
+     * The loop updates the positions of the enemy and clouds, checks for collisions with the player,
+     * and handles game over conditions.
+     */
     function StartLoop() {
         loop = setInterval(() => {
             let enemyPosition;
+            let cloudsPosition;
+            let cloudsPosition2;
 
             // Computes the height of the player
             var marioPosition = +window.getComputedStyle(hitboxMario).bottom.replace('px', '');
@@ -128,15 +121,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Increase speed based on points
             enemySpeed = 5 + (scoreCounter / 5);
+            cloudSpeed = 1 + (scoreCounter / 7);
 
             // Generate random number
             randomNum = generateRandomNumber(1, 100);
 
-            if (enemyPos < -99) { // Give 1 point when the enemy reaches the end of the screen
+            if(cloudPos < -800){
+                cloudPos = 800;
+            }
+            if(cloudPos2 < -800){
+                cloudPos2 = 800;
+            }
 
+            if (enemyPos < -99) { // Give 1 point when the enemy reaches the end of the screen
                 enemyPos = 800;
                 scoreCounter++;
 
+                // Decrease duration by 0.1s for each point 
                 points.innerHTML = scoreCounter.toString().padStart(4, '0');
                 pointsMenu.innerHTML = scoreCounter.toString().padStart(4, '0');
 
@@ -150,24 +151,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     hitboxEnemy.style.bottom = '';
                     airborneEnemy = false;
                 }
-
-            } else if (enemySpeed < 20) { // If the enemy's speed is less than 20, the speed is based on points
-
+            } else if (enemySpeed < 14) { // If the enemy's speed is less than 14, the speed is based on points
                 enemyPosition = enemyPos -= enemySpeed;
                 hitboxEnemy.style.left = enemyPosition + 'px';
-
-            } else { // If the speed is greater than 20, the speed will be locked at 20
-
-                enemyPosition = enemyPos -= 20;
+                cloudsPosition = cloudPos -= cloudSpeed;
+                cloudsPosition2 = cloudPos2 -= cloudSpeed;
+                console.log(cloudSpeed)
+                clouds1.style.left = cloudsPosition + 'px';
+                clouds2.style.left = cloudsPosition2 + 'px';
+            } else { // If the speed is greater than 13, the speed will be locked at 13
+                console.log(cloudSpeed + "  /  " + enemyPosition)
+                enemyPosition = enemyPos -= 13;
                 hitboxEnemy.style.left = enemyPosition + 'px';
-
+                cloudsPosition = cloudPos -= 7.2;
+                cloudsPosition2 = cloudPos2 -= 7.2;
+                clouds1.style.left = cloudsPosition + 'px';
+                clouds2.style.left = cloudsPosition2 + 'px';
             }
 
             // Check if the player collided with the enemy
             if (enemyPosition > 0 && enemyPosition < 110 && marioPosition < 40 && airborneEnemy == false || enemyPosition > 0 && enemyPosition < 110 && airborneEnemy == true && marioHeight > 55) {
-
-                GameOver(marioPosition, enemyPosition);
-
+                GameOver(marioPosition);
                 if (!screen.classList.contains('efeitoPulo')) {
                     screen.classList.add('menuAnimation');
                     container.classList.add('menuAnimation2');
@@ -176,9 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     screen.classList.remove('efeitoPulo');
                 }
-
             }
-
         }, 10);
     }
 
@@ -232,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
             hitboxMario.style.height = '';
             mario.style.right = '';
             big = true;
-
         }
     }
 
@@ -245,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
             mario.style.right = '0px';
             hitboxMario.style.height = '50px';
             big = false;
-
         }
     }
 
@@ -254,22 +254,25 @@ document.addEventListener('DOMContentLoaded', function () {
         Reload(); // Call the Reload() function when the button is clicked
     })
 
-    window.onload = function() {
+    window.onload = function () {
         setTheme(0);
-        document.getElementById("darkTheme").onclick = function() {
+        document.getElementById("darkTheme").onclick = function () {
             setTheme(0);
         };
-        document.getElementById("lightTheme").onclick = function() {
+        document.getElementById("lightTheme").onclick = function () {
             setTheme(1);
         };
-        document.getElementById("marioTheme").onclick = function() {
+        document.getElementById("marioTheme").onclick = function () {
             setTheme(2);
         };
     };
 
+    /**
+     * Sets the theme of the document body based on the given index.
+     */
     function setTheme(index) {
         const body = document.body;
-        switch(index) {
+        switch (index) {
             case 0:
                 body.className = 'dark';
                 break;
@@ -283,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Índice inválido');
         }
     }
+
     // Start the game when the page loads
     init();
 });
