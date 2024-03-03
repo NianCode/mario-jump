@@ -188,10 +188,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (progress < (fastFall ? jumpDuration * 0.75 : jumpDuration) && alive == true) {
             window.requestAnimationFrame(jump);
         } else {
-            hitboxMario.style.bottom = `0px`;
+            if (alive == true) {
+                hitboxMario.style.bottom = `0px`;
+            }
             screen.classList.remove('efeitoPulo');
             jumpStart = null;  // Reset start time after animation finishes
             fastFall = false;  // Reset fast fall after animation finishes
+
         }
     }
 
@@ -220,8 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null && big == false) {
-                window.requestAnimationFrame(jump);
-                screen.classList.add('efeitoPulo');
+            window.requestAnimationFrame(jump);
+            screen.classList.add('efeitoPulo');
 
         }
     };
