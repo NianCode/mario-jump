@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('saveButton').onclick = function () {
         // Leia o nome do jogador do campo de entrada
+        if (localStorage.getItem('scoreSaved')) {
+            alert('You have already saved your score.');
+            return;
+        }
+    
         let playerName = document.getElementById('playerName').value;
 
         // Escreva o nome do jogador e a pontuação no Firestore
@@ -37,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             score: scoreCounter
         })
             .then(() => {
-                console.log("Score saved!");
+                localStorage.setItem('scoreSaved', 'true');
             })
             .catch((error) => {
                 console.error("Error saving score: ", error);
@@ -132,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Game initialization when the page loads
     function init() {
+        localStorage.removeItem('scoreSaved');
         alive = true;
         fastFall = false;
         StartLoop();
