@@ -2,70 +2,68 @@
 // pt-br: Código escrito por NianCode.
 // Email: nicolash.contato@gmail.com
 
-import db from './firebase.js';
-import { collection, query, orderBy, limit, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { collection, query, orderBy, limit, getDocs, addDoc, getFirestore, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js';
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Import the functions you need from the SDKs you need
 
-    document.getElementById('saveButton').onclick = function() {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCNBM1yPYmRRui4Ba1Vv-Zk9VSaW0e2RbY",
+        authDomain: "nian-code.firebaseapp.com",
+        projectId: "nian-code",
+        storageBucket: "nian-code.appspot.com",
+        messagingSenderId: "388387613829",
+        appId: "1:388387613829:web:7bfc12a7e1281ec4884dec",
+        measurementId: "G-66WXRDSMY8"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+
+    document.getElementById('saveButton').onclick = function () {
         // Leia o nome do jogador do campo de entrada
         let playerName = document.getElementById('playerName').value;
-    
+
         // Escreva o nome do jogador e a pontuação no Firestore
         addDoc(collection(db, "scores"), {
             name: playerName,
-            score: score
-        }).then(() => {
-            console.log("Score saved!");
-        }).catch((error) => {
-            console.error("Error saving score: ", error);
-        });
+            score: scoreCounter
+        })
+            .then(() => {
+                console.log("Score saved!");
+            })
+            .catch((error) => {
+                console.error("Error saving score: ", error);
+            });
     };
 
     const scoresQuery = query(collection(db, "scores"), orderBy("score", "desc"), limit(5));
-
-    getDocs(scoresQuery).then((querySnapshot) => {
-        let rank = 1;
-        querySnapshot.forEach((doc) => {
-            let data = doc.data();
-            document.getElementById(`lblN${rank}Ranking`).textContent = data.name;
-            document.getElementById(`n${rank}Ranking`).textContent = data.score;
-            rank++;
-        });
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const unsubscribe = onSnapshot(scoresQuery,
+        (querySnapshot) => {
+            // Limpe a lista de ranking antes de adicionar as novas pontuações
+            document.getElementById('ranking').innerHTML = '';
+            let rank = 1;
+            querySnapshot.forEach((doc) => {
+                let data = doc.data();
+                // Crie um novo elemento de lista para cada pontuação
+                let listItem = document.createElement('li');
+                listItem.textContent = `${rank}. ${data.name}: ${data.score}`;
+                // Adicione o elemento de lista ao ranking
+                document.getElementById('ranking').appendChild(listItem);
+                rank++;
+            });
+        },
+        (error) => {
+            console.error("Error listening to score updates: ", error);
+        }
+    );
 
     // Variables for game elements
     const hitboxMario = document.querySelector('.hitboxMario'); // Hitbox of Mario
@@ -84,26 +82,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Game state variables
-    let scoreCounter = 0; // Initial value of the score counter
-    let loop; // Loop variable
-    let randomNum = 0 // Number that defines the chance of the enemy being airborne or not
-    let enemyPos = 800 // Initial position of the enemy
-    let cloudPos = 800; // Initial position of the first cloud
-    let cloudPos2 = 1600; // Initial position of the second cloud
-    let cloudSpeed = 1; // Initial speed of the clouds
-    let enemySpeed = 5 // Initial speed of the enemy
-    let airborneEnemy = false // Value to check if the enemy is airborne or not
-    let big = true // Value to check if the character is big or not
-    let alive = true; // Value to check if the character is alive or not
-    let jumpStart = null // Value to check if the character is jumping or not
-    let jumpDistance = 120   // Jump distance
-    let jumpDuration = 500 // Jump duration
-    let jumpKeyIsDown = false // Value to check if the jump key is down or not
+    var scoreCounter = 0; // Initial value of the score counter
+    var loop; // Loop variable
+    var randomNum = 0 // Number that defines the chance of the enemy being airborne or not
+    var enemyPos = 800 // Initial position of the enemy
+    var cloudPos = 800; // Initial position of the first cloud
+    var cloudPos2 = 1600; // Initial position of the second cloud
+    var cloudSpeed = 1; // Initial speed of the clouds
+    var enemySpeed = 5 // Initial speed of the enemy
+    var airborneEnemy = false // Value to check if the enemy is airborne or not
+    var big = true // Value to check if the character is big or not
+    var alive = true; // Value to check if the character is alive or not
+    var jumpStart = null // Value to check if the character is jumping or not
+    var jumpDistance = 120   // Jump distance
+    var jumpDuration = 500 // Jump duration
+    var fastFall = false; // Value to check if the character is falling fast or not
 
     // Object with character information for reset
     const originalCharacters = {
         marioBottom: +window.getComputedStyle(hitboxMario).bottom.replace('px', ''),
         marioAnimation: hitboxMario.style.animation
+    };
+
+    function Shrink() {
+        if (big == true) {
+            mario.src = './imagens/personagem/mario_mini.gif';
+            mario.style.width = '70px';
+            mario.style.height = '70px';
+            mario.style.right = '0px';
+            hitboxMario.style.height = '50px';
+            big = false;
+        }
+    }
+
+    var KeyDownEvent = function (event) {
+        if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null) {
+            window.requestAnimationFrame(jump);
+            screen.classList.add('efeitoPulo');
+        }
+        if (alive == true && big == true) {
+            if (event.key == 'ArrowDown' || event.key == 's' || event.key == 'Shift') {
+                Shrink();
+                if (jumpStart !== null) {
+                    fastFall = true;
+                }
+            }
+        }
     };
 
     // Game initialization when the page loads
@@ -242,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 10);
     }
 
-    var fastFall = false;
+
     function jump(timestamp) {
         if (!jumpStart) jumpStart = timestamp;
         var progress = timestamp - jumpStart;
@@ -261,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    KeyDownEvent = function (event) {
+    var KeyDownEvent = function (event) {
         if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null) {
             window.requestAnimationFrame(jump);
             screen.classList.add('efeitoPulo');
@@ -276,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    KeyUpEvent = function (event) {
+    var KeyUpEvent = function (event) {
         if (event.key == 'ArrowDown' || event.key == 's' || event.key == 'Shift') {
             Enlarge();
             fastFall = false;
@@ -305,16 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Function for the character to shrink
-    function Shrink() {
-        if (big == true) {
-            mario.src = './imagens/personagem/mario_mini.gif';
-            mario.style.width = '70px';
-            mario.style.height = '70px';
-            mario.style.right = '0px';
-            hitboxMario.style.height = '50px';
-            big = false;
-        }
-    }
+
 
     // Add an event listener for the click event on the button
     btnRestart.addEventListener('click', function () {

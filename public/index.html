@@ -62,7 +62,7 @@
             <div class="menu">
 
                 <!-- Points label -->
-                <label for="pontosMenu" class="lblPontosMenu">Pontos</label>
+                <label class="lblPontosMenu">Pontos</label>
                 <!-- Points counter in the menu -->
                 <div class="pontosMenu">0000</div>
                 <!-- Restart button -->
@@ -76,39 +76,10 @@
             <div class="containerRanking">
 
                 <!-- Ranking label -->
-                <label for="rankingBox" class="lblRankingBox">Ranking</label>
+                <label class="lblRankingBox">Ranking</label>
                 <!-- Ranking box -->
                 <div class="rankingBox">
-
-                    <!-- Ranking items -->
-                    <div class="rankingItem">
-                        <!-- Label for the first ranking item -->
-                        <label for="n1Ranking" class="lblRanking" id="lblN1Ranking">Aaaaa</label>
-                        <!-- Points for the first ranking item -->
-                        <p class="Ranking" id="n1Ranking">0000</p>
-                    </div>
-
-                    <!-- Repeat the structure for other ranking items -->
-                    <div class="rankingItem">
-                        <label for="n2Ranking" class="lblRanking" id="lblN2Ranking">Bbbbb</label>
-                        <p class="Ranking" id="n2Ranking">0000</p>
-                    </div>
-
-                    <div class="rankingItem">
-                        <label for="n3Ranking" class="lblRanking" id="lblN3Ranking">Ccccc</label>
-                        <p class="Ranking" id="n3Ranking">0000</p>
-                    </div>
-
-                    <div class="rankingItem">
-                        <label for="n4Ranking" class="lblRanking" id="lblN4Ranking">Ddddd</label>
-                        <p class="Ranking" id="n4Ranking">0000</p>
-                    </div>
-
-                    <div class="rankingItem">
-                        <label for="n5Ranking" class="lblRanking" id="lblN5Ranking">Eeeee</label>
-                        <p class="Ranking" id="n5Ranking">0000</p>
-                    </div>
-
+                    <ul id="ranking"></ul>
                 </div>
                 <input type="text" id="playerName" placeholder="Enter your name">
                 <button id="saveButton">Save</button>
@@ -121,8 +92,7 @@
 </body>
 
 <!-- Link to JavaScript file -->
-<script type="module" src="firebase.js"></script>
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 
 </html>
