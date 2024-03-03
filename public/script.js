@@ -2,7 +2,70 @@
 // pt-br: Código escrito por NianCode.
 // Email: nicolash.contato@gmail.com
 
+import db from './firebase.js';
+import { collection, query, orderBy, limit, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js';
+
 document.addEventListener('DOMContentLoaded', function () {
+
+
+    document.getElementById('saveButton').onclick = function() {
+        // Leia o nome do jogador do campo de entrada
+        let playerName = document.getElementById('playerName').value;
+    
+        // Escreva o nome do jogador e a pontuação no Firestore
+        addDoc(collection(db, "scores"), {
+            name: playerName,
+            score: score
+        }).then(() => {
+            console.log("Score saved!");
+        }).catch((error) => {
+            console.error("Error saving score: ", error);
+        });
+    };
+
+    const scoresQuery = query(collection(db, "scores"), orderBy("score", "desc"), limit(5));
+
+    getDocs(scoresQuery).then((querySnapshot) => {
+        let rank = 1;
+        querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            document.getElementById(`lblN${rank}Ranking`).textContent = data.name;
+            document.getElementById(`n${rank}Ranking`).textContent = data.score;
+            rank++;
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Variables for game elements
     const hitboxMario = document.querySelector('.hitboxMario'); // Hitbox of Mario
