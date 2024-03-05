@@ -10,65 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Import the functions you need from the SDKs you need
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCNBM1yPYmRRui4Ba1Vv-Zk9VSaW0e2RbY",
-        authDomain: "nian-code.firebaseapp.com",
-        projectId: "nian-code",
-        storageBucket: "nian-code.appspot.com",
-        messagingSenderId: "388387613829",
-        appId: "1:388387613829:web:7bfc12a7e1281ec4884dec",
-        measurementId: "G-66WXRDSMY8"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
-
-
-    document.getElementById('saveButton').onclick = function () {
-        // Leia o nome do jogador do campo de entrada
-        if (localStorage.getItem('scoreSaved')) {
-            alert('You have already saved your score.');
-            return;
-        }
-    
-        let playerName = document.getElementById('playerName').value;
-
-        // Escreva o nome do jogador e a pontuação no Firestore
-        addDoc(collection(db, "scores"), {
-            name: playerName,
-            score: scoreCounter
-        })
-            .then(() => {
-                localStorage.setItem('scoreSaved', 'true');
-            })
-            .catch((error) => {
-                console.error("Error saving score: ", error);
-            });
-    };
-
-    const scoresQuery = query(collection(db, "scores"), orderBy("score", "desc"), limit(5));
-    const unsubscribe = onSnapshot(scoresQuery,
-        (querySnapshot) => {
-            // Limpe a lista de ranking antes de adicionar as novas pontuações
-            document.getElementById('ranking').innerHTML = '';
-            let rank = 1;
-            querySnapshot.forEach((doc) => {
-                let data = doc.data();
-                // Crie um novo elemento de lista para cada pontuação
-                let listItem = document.createElement('li');
-                listItem.textContent = `${rank}. ${data.name}: ${data.score}`;
-                // Adicione o elemento de lista ao ranking
-                document.getElementById('ranking').appendChild(listItem);
-                rank++;
-            });
-        },
-        (error) => {
-            console.error("Error listening to score updates: ", error);
-        }
-    );
 
     // Variables for game elements
     const hitboxMario = document.querySelector('.hitboxMario'); // Hitbox of Mario
@@ -102,6 +43,88 @@ document.addEventListener('DOMContentLoaded', function () {
     var jumpDistance = 120   // Jump distance
     var jumpDuration = 500 // Jump duration
     var fastFall = false; // Value to check if the character is falling fast or not
+
+    // Web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCNBM1yPYmRRui4Ba1Vv-Zk9VSaW0e2RbY",
+        authDomain: "nian-code.firebaseapp.com",
+        projectId: "nian-code",
+        storageBucket: "nian-code.appspot.com",
+        messagingSenderId: "388387613829",
+        appId: "1:388387613829:web:7bfc12a7e1281ec4884dec",
+        measurementId: "G-66WXRDSMY8"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+
+    document.getElementById('saveButton').onclick = function () {
+        // Leia o nome do jogador do campo de entrada
+        if (localStorage.getItem('scoreSaved')) {
+            alert('Você já salvou sua pontuação.');
+            return;
+        }
+    
+        let playerName = document.getElementById('playerName').value;
+    
+        // Verifique se o nome do jogador contém apenas letras e números e tem entre 2 e 5 caracteres
+        let regex = /^[a-zA-Z0-9]{2,5}$/;
+        if (!regex.test(playerName)) {
+            alert('O nome do jogador deve conter apenas letras e números e ter entre 2 e 5 caracteres.');
+            return;
+        }
+    
+        // Escreva o nome do jogador e a pontuação no Firestore
+        addDoc(collection(db, "scores"), {
+            name: playerName,
+            score: scoreCounter
+        })
+            .then(() => {
+                localStorage.setItem('scoreSaved', 'true');
+            })
+            .catch((error) => {
+                console.error("Erro ao salvar pontuação: ", error);
+            });
+    };
+    const scoresQuery = query(collection(db, "scores"), orderBy("score", "desc"), limit(50));
+    const unsubscribe = onSnapshot(scoresQuery,
+        (querySnapshot) => {
+            // Limpe a lista de ranking antes de adicionar as novas pontuações
+            let rankingTable = document.getElementById('ranking');
+            rankingTable.innerHTML = '';
+            let rank = 1;
+            querySnapshot.forEach((doc) => {
+                let data = doc.data();
+                // Crie um novo elemento de linha para cada pontuação
+                let row = document.createElement('tr');
+                // Crie um elemento de célula para a posição, o nome e a pontuação
+                let rankCell = document.createElement('td');
+                let nameCell = document.createElement('td');
+                let scoreCell = document.createElement('td');
+                // Crie um elemento div para o nome
+                let nameDiv = document.createElement('div');
+                // Defina o conteúdo das células
+                rankCell.textContent = rank;
+                nameDiv.textContent = data.name;
+                scoreCell.textContent = data.score;
+                // Adicione o div ao nameCell
+                nameCell.appendChild(nameDiv);
+                // Adicione as células à linha
+                row.appendChild(rankCell);
+                row.appendChild(nameCell);
+                row.appendChild(scoreCell);
+                // Adicione a linha à tabela de ranking
+                rankingTable.appendChild(row);
+                rank++;
+            });
+        },
+        (error) => {
+            console.error("Error listening to score updates: ", error);
+        }
+    );
 
     // Object with character information for reset
     const originalCharacters = {
