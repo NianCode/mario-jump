@@ -47,6 +47,19 @@ body.image {
     color: #333;
 }
 
+.niancodeLogo {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    height: 65px;
+    width: 220px;
+    background-image: url('./imagens/nian-code.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
 /* Theme container styling */
 .themeContainer {
     position: absolute;

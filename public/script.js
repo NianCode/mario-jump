@@ -7,10 +7,6 @@ import { collection, query, orderBy, limit, getDocs, addDoc, getFirestore, onSna
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    // Import the functions you need from the SDKs you need
-
-
     // Variables for game elements
     const hitboxMario = document.querySelector('.hitboxMario'); // Hitbox of Mario
     const mario = document.querySelector('.mario'); // Mario element
@@ -25,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnRestart = document.querySelector('.btnRestart'); // Restart button
     const clouds1 = document.querySelector('#nuvens1'); // Clouds
     const clouds2 = document.querySelector('#nuvens2'); // Clouds
-
-
     // Game state variables
     var scoreCounter = 0; // Initial value of the score counter
     var loop; // Loop variable
@@ -365,18 +359,27 @@ document.addEventListener('DOMContentLoaded', function () {
         init(); // Call the Reload() function when the button is clicked
     })
 
+    var niancodeLogo = document.querySelector('.niancodeLogo');
+
     window.onload = function () {
         setTheme(0);
         document.getElementById("darkTheme").onclick = function () {
             setTheme(0);
+            niancodeLogo.style.backgroundImage = 'url(./imagens/nian-code.png)';
         };
         document.getElementById("lightTheme").onclick = function () {
             setTheme(1);
-        };
+            niancodeLogo.style.backgroundImage = 'url(./imagens/nian-codeblack.png)';
+        }
         document.getElementById("marioTheme").onclick = function () {
             setTheme(2);
+            niancodeLogo.style.backgroundImage = 'url(./imagens/nian-codeblack.png)';
         };
     };
+
+    niancodeLogo.onclick = function () {
+        window.open('https://github.com/NianCode', '_blank');
+    }
 
     /**
      * Sets the theme of the document body based on the given index.
