@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Crie um elemento div para o nome
                 let nameDiv = document.createElement('div');
                 // Defina o conteúdo das células
-                rankCell.textContent = rank;
+                rankCell.textContent = String(rank).padStart(2, '0');;
                 nameDiv.textContent = data.name;
                 scoreCell.textContent = data.score;
                 // Adicione o div ao nameCell
