@@ -308,6 +308,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    screen.addEventListener('click', function () {
+        if (jumpStart === null) {
+            window.requestAnimationFrame(jump);
+            screen.classList.add('efeitoPulo');
+        }
+    });
+
+    screen.addEventListener('mousedown', function () {
+        if (alive == true && big == true) {
+            Shrink();
+            if (jumpStart !== null) {
+                fastFall = true;
+            }
+        }
+    });
+
+    screen.addEventListener('mouseup', function () {
+        Enlarge();
+        fastFall = false;
+    });
+
     var KeyDownEvent = function (event) {
         if ((event.key == ' ' || event.key == 'w' || event.key == 'ArrowUp' || event.key == "Enter") && jumpStart === null) {
             window.requestAnimationFrame(jump);
