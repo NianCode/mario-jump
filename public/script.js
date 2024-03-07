@@ -61,16 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Você já salvou sua pontuação.');
             return;
         }
-    
+
         let playerName = document.getElementById('playerName').value;
-    
+
         // Verifique se o nome do jogador contém apenas letras e números e tem entre 2 e 5 caracteres
         let regex = /^[a-zA-Z0-9]{2,5}$/;
         if (!regex.test(playerName)) {
             alert('O nome do jogador deve conter apenas letras e números e ter entre 2 e 5 caracteres.');
             return;
         }
-    
+
         // Escreva o nome do jogador e a pontuação no Firestore
         addDoc(collection(db, "scores"), {
             name: playerName,
@@ -316,6 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    
     screen.addEventListener('mousedown', function () {
         if (alive == true && big == true) {
             Shrink();
@@ -326,8 +327,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     screen.addEventListener('mouseup', function () {
-        Enlarge();
-        fastFall = false;
+        if (alive == true) {
+            Enlarge();
+            fastFall = false;
+        }
     });
 
     var KeyDownEvent = function (event) {
