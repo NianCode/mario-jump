@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     screen.addEventListener('click', function () {
-        if (jumpStart === null) {
+        if (jumpStart === null && alive == true) {
             window.requestAnimationFrame(jump);
             screen.classList.add('efeitoPulo');
         }
