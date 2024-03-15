@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     niancodeLogo.onclick = function () {
-        window.open('https://github.com/NianCode', '_blank');
+        window.open('https://nian-code.web.app/', '_blank');
     }
 
     /**
