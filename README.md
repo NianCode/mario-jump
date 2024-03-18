@@ -1,4 +1,4 @@
-# 🎮 Web Development Learning Project: Simple Game for Practice
+## 🎮 Web Development Learning Project: Simple Game for Practice
 
 Welcome to this repository, which hosts a fun and straightforward game inspired by the popular "Dinosaur Game" often played during internet outages. This project is built using HTML, CSS, and JavaScript, making it an excellent playground for beginners to explore and practice web development skills.
 
